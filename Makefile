@@ -5,14 +5,15 @@ LIBS := -lcunit
 # Directories
 SRC_DIR := src
 TEST_DIR := tests
+OBJ_DIR := obj
 
 # Source and test files
 SOURCES := $(wildcard $(SRC_DIR)/*.c)
 TESTS := $(wildcard $(TEST_DIR)/*.c)
 
 # Object files
-OBJECTS := $(SOURCES:.c=.o)
-TEST_OBJECTS := $(TESTS:.c=.o)
+OBJECTS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SOURCES))
+TEST_OBJECTS := $(patsubst $(TEST_DIR)/%.c,$(OBJ_DIR)/%.o,$(TESTS))
 
 # Executables
 EXECUTABLE := arm_rt_dsp
@@ -31,11 +32,16 @@ $(TEST_EXECUTABLE): $(TEST_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 # Rule for building object files
-%.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(TEST_DIR)/%.c
+	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Run the tests
-test: $(TEST_EXECUTABLE)
+test: clean $(TEST_EXECUTABLE)
 	./$(TEST_EXECUTABLE)
 
 clean:
