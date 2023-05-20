@@ -6,37 +6,89 @@ I want to work on my Github project today.  This is an
 embedded C project that uses CUnit for unit testing.  The 
 project consists of ARM DSP library that I am adding unit
 tests to and publishing to GitHub.  I would like to make 
-improvements as I go along.
-
-Here is a list of the directories in the repository:
-ARM-RT-DSP/examples
-ARM-RT-DSP/docs
-ARM-RT-DSP/src
-ARM-RT-DSP/tests
-ARM-RT-DSP/include
-ARM-RT-DSP/
+improvements as I go along.  I need to add CUnit tests 
+for my new ramp functions.  Please repeat the plan back to me.
+without writing any code or explaining much.
 
 Here is a list of the files in the repository:
 ARM-RT-DSP/Makefile
 ARM-RT-DSP/docs/usage_guide.md
 ARM-RT-DSP/docs/api_reference.md
-ARM-RT-DSP/LICENSE.txt
 ARM-RT-DSP/tests/suite1.c
 ARM-RT-DSP/tests/test_main.c
-ARM-RT-DSP/tests/test_main.o
-ARM-RT-DSP/tests/suite1.o
 ARM-RT-DSP/include/arm_rt_dsp.h
 ARM-RT-DSP/include/common.h
+ARM-RT-DSP/src/arm_rt_dsp.c
 ARM-RT-DSP/training_content.txt
 ARM-RT-DSP/README.md
+ARM-RT-DSP/LICENSE.txt
 
 Here is my status journal for the project:
+5/20 - Added custom ramp functions to the arm_rt_dsp.h file.
+5/20 - Added custom ramp functions to the arm_rt_dsp.c file.
 5/20 - Removed old commented out code and unrelevant comments.
 5/20 - Investigated running automated unit tests on ARM development boards.
 5/19 - Published ARM-RT-DSP to Github private repository and connected the VS Code project.
 5/17 - Added some of my custome DSP types and functions to the arm_rt_dsp.h file.
 5/16 - Added arm_rt_dsp.h and common.h to the project.
 5/15 - Created ARM-RT-DSP project in VS Code and added CUnit unit tests.
+
+Here is my plan for today:
+1. Add CUnit tests for the new ramp functions.
+
+
+Here is the code for a ramp function.  Write a CUnit test.  I will add this to a new file, suite2.c.  Use an array for the test inputs.
+
+void ramp_limit_init_i16(int16_t y0, ramp_limit_i16_t *r) {
+    // Sets the starting value to between the lower limit and the upper limit.
+    if (y0 < r->llim) {
+        r->y = r->llim;
+    } else if (y0 > r->ulim) {
+        r->y = r->ulim;
+    } else {
+        r->y = y0;
+    }
+}
+
+
+int16_t ramp_limit_i16(int16_t x, ramp_limit_i16_t *r) {
+    int32_t delta = 0;
+
+    delta = x - r->y;
+
+    // inc is the limit of speed of movement from one number to the next.
+    // Lets just do this the verbose way first.
+    if (delta > r->inc) {
+        delta = r->inc;
+    } else if (delta < (0-r->inc)) {
+        delta = 0 - r->inc;
+    }
+
+    r->y += delta;
+
+    // Sets the return value to between the lower limit and the upper limit.
+    if (r->y < r->llim) {
+        r->y = r->llim;
+    } else if (r->y > r->ulim) {
+        r->y = r->ulim;
+    }
+
+    return r->y;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

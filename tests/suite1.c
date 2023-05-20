@@ -100,8 +100,6 @@ void test_ssat_i64() {
 
 
 
-
-
 void test_mulsat_q15() {
     // test positive * positive
     q15_t input1 = 0x7FFF;
@@ -118,6 +116,7 @@ void test_mulsat_q15() {
     input2 = 0;
     CU_ASSERT(mulsat_q15(input1, input2) == 0);
 }
+
 
 void test_mulsat_q31() {
     // test positive * positive
