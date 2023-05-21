@@ -125,8 +125,9 @@ void test_mulsat_q31() {
     CU_ASSERT(mulsat_q31(input1, input2) == 0x7FFFFFFE);
 
     // test positive * negative
+    // This one needs work. Results values are wrong. AM 5/21/2023
     input2 = -input2;
-    CU_ASSERT(mulsat_q31(input1, input2) == -0x80000000);   // Or should it be -0x7FFFFFFE?
+    CU_ASSERT(mulsat_q31(input1, input2) == -0x7FFFFFFE);
 
     // test with zero
     input2 = 0;

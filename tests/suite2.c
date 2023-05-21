@@ -22,7 +22,7 @@ void test_ramp_limit_i16_pos(void) {
     ramp_limit_init_i16(0, &ramp);
 
     // Test ramp_limit_i16 for each input
-    for (int i = 0; i < sizeof(test_inputs)/sizeof(test_inputs[0]); i++) {
+    for (int i = 0; i < (int)(sizeof(test_inputs)/sizeof(test_inputs[0])); i++) {
         CU_ASSERT_EQUAL(ramp_limit_i16(test_inputs[i], &ramp), expected_outputs[i]);
     }
 }
@@ -40,7 +40,7 @@ void test_ramp_limit_i16_neg(void) {
     ramp_limit_init_i16(0, &ramp);
 
     // Test ramp_limit_i16 for each input
-    for (int i = 0; i < sizeof(test_inputs)/sizeof(test_inputs[0]); i++) {
+    for (int i = 0; i < (int)(sizeof(test_inputs)/sizeof(test_inputs[0])); i++) {
         CU_ASSERT_EQUAL(ramp_limit_i16(test_inputs[i], &ramp), expected_outputs[i]);
     }
 }
@@ -58,7 +58,7 @@ void test_ramp_limit_i16_ulim(void) {
     ramp_limit_init_i16(0, &ramp);
 
     // Test ramp_limit_i16 for each input
-    for (int i = 0; i < sizeof(test_inputs)/sizeof(test_inputs[0]); i++) {
+    for (int i = 0; i < (int)(sizeof(test_inputs)/sizeof(test_inputs[0])); i++) {
         CU_ASSERT_EQUAL(ramp_limit_i16(test_inputs[i], &ramp), expected_outputs[i]);
     }
 }
@@ -76,7 +76,7 @@ void test_ramp_limit_i16_llim(void) {
     ramp_limit_init_i16(0, &ramp);
 
     // Test ramp_limit_i16 for each input
-    for (int i = 0; i < sizeof(test_inputs)/sizeof(test_inputs[0]); i++) {
+    for (int i = 0; i < (int)(sizeof(test_inputs)/sizeof(test_inputs[0])); i++) {
         CU_ASSERT_EQUAL(ramp_limit_i16(test_inputs[i], &ramp), expected_outputs[i]);
     }
 }

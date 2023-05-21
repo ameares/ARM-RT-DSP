@@ -1,10 +1,13 @@
 # ARM-RT-DSP (ARM Real-Time DSP Extension Library)
 
+![Project status](https://img.shields.io/badge/Project%20status-Work%20in%20progress-orange)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Issues](https://img.shields.io/github/issues/your-username/ARM-RT-DSP)](https://github.com/your-username/ARM-RT-DSP/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/your-username/ARM-RT-DSP)](https://github.com/your-username/ARM-RT-DSP/pulls)
 
-Welcome to the ARM-RT-DSP repository! This repository contains the ARM Real-Time DSP Extension Library, which provides a collection of optimized digital signal processing (DSP) algorithms for ARM-based platforms. The library aims to facilitate real-time audio, image, and video processing applications on ARM processors.
+Welcome to the ARM-RT-DSP repository! This repository contains the ARM Real-Time DSP Extension Library, which provides a collection of optimized digital signal processing (DSP) algorithms for ARM-based platforms. The primary focus of the library is to facilitate real-time control applications on ARM processors in conjunction with the ARM DSP support library. The library complements the [ARM CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) library.
+
+**Please note:** This project is currently under active development and is not yet ready for use in production environments. The documentation, API, and other aspects may undergo significant changes as the project evolves.
 
 ## Table of Contents
 
@@ -18,7 +21,7 @@ Welcome to the ARM-RT-DSP repository! This repository contains the ARM Real-Time
 ## Features
 
 - High-performance and optimized DSP algorithms for ARM processors.
-- Support for real-time audio, image, and video processing applications.
+- Primarily designed for real-time control applications.
 - Modular and easy-to-use library design.
 - Well-documented API and examples to help you get started quickly.
 
