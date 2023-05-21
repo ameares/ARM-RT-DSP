@@ -16,6 +16,6 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get install -y libcunit1-dev
     - name: Build
-      run: make
+      run: make test
     - name: Test
       run: make test
