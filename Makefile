@@ -28,7 +28,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 # Build the test runner
-$(TEST_EXECUTABLE): $(TEST_OBJECTS)
+$(TEST_EXECUTABLE): $(TEST_OBJECTS) $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 # Rule for building object files
