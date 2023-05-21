@@ -16,11 +16,11 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get install -y libcunit1-dev
     - name: Test
-      run: make test
-    - name: Upload Test Results
+      run: make test 2>&1 | tee test-output.txt
+    - name: Upload Test Output
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2
       with:
-        name: TestResults
-        path: ./test-results.xml
+        name: TestOutput
+        path: ./test-output.txt
       
