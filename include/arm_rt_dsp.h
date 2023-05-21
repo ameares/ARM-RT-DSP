@@ -274,10 +274,7 @@ static inline q15_t mulsat_q15(q15_t x, q15_t y) {
 
 /**
  * \brief Multiplies two Q31s with saturation.
- *
- * The saturated version sacrifices the lowest bit.
- *
- * \todo Make a rounding version.
+ * 
  * \param x The first multiplicand.
  * \param y The second multiplicand.
  * \return The saturated product of the two multiplicands with a range of [-1.0, 1.0).
