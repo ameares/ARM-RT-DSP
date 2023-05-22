@@ -20,10 +20,15 @@ Welcome to the ARM-RT-DSP repository! This repository contains the ARM Real-Time
 
 ## Features
 
-- High-performance and optimized DSP algorithms for ARM processors.
 - Primarily designed for real-time control applications.
-- Modular and easy-to-use library design.
-- Well-documented API and examples to help you get started quickly.
+- Intended for ARM processors but can be used on other platforms.
+- Support macros for defining fixed point constants.
+- 32-bit saturated math functions.
+- Conversion functions for fixed-point data types.
+- Limit and range check functions.
+- Ramp functions.
+- Hysteresis functions.
+- Fast and simple pseudo-moving average filter.
 
 ## Installation
 
@@ -43,7 +48,7 @@ For detailed installation instructions and additional information, refer to the 
 
 ## Usage
 
-To start using the ARM-RT-DSP library, please refer to the [Usage Guide](docs/usage.md). It provides an overview of the library's modules, functions, and usage examples to help you integrate the library into your projects effectively.
+To start using the ARM-RT-DSP library, please refer to the [Usage Guide](docs/usage_guide.md). It provides an overview of the library's modules, functions, and usage examples to help you integrate the library into your projects effectively.
 
 ## Contributing
 

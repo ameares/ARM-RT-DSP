@@ -150,3 +150,29 @@ q31_t ramp_q31(q31_t x, ramp_q31_t *r) {
     r->y = result;
     return result;
 }
+
+
+/*-----------------------------------------------------------------------------
+History:
+
+Notes:
+
+-----------------------------------------------------------------------------*/
+void hysteresis_init(q31_t l_thresh, q31_t h_thresh, hysteresis_thresh_t *H) {
+    H->hyst_off = l_thresh;
+    H->hyst_on = h_thresh;
+    H->out_state = 0;
+}
+
+
+/*-----------------------------------------------------------------------------
+History:
+
+Notes:
+
+-----------------------------------------------------------------------------*/
+void hysteresis_init_i16(int16_t l_thresh, int16_t h_thresh, hysteresis_thresh_i16_t *H) {
+    H->hyst_off = l_thresh;
+    H->hyst_on = h_thresh;
+    H->out_state = 0;
+}

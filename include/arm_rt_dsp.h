@@ -818,4 +818,117 @@ void ramp_init_q31(q31_t y0, ramp_q31_t *r);
  */
 q31_t ramp_q31(q31_t x, ramp_q31_t *r);
 
+
+/**
+ * \brief Context structure for the hysteresis function.
+ *
+ */
+typedef struct
+{
+    q31_t hyst_on;     /**< Value determining the upper threshold */
+    q31_t hyst_off;    /**< Value determining the lower threshold */
+    int32_t out_state; /**< Actual state of the output */
+} hysteresis_thresh_t;
+
+
+/**
+ * \brief Initialize a hyseresis process function.
+ *
+ * \param l_thresh Value determining the lower threshold.
+ * \param h_thresh Value determining the upper threshold.
+ * \param H The context structure for this hysteresis process.
+ */
+void hysteresis_init(q31_t l_thresh, q31_t h_thresh, hysteresis_thresh_t *H);
+
+
+/**
+ * \brief Applies a threshold with hysteresis to a q31_t value.
+ *
+ * \param val The input value.
+ * \param H The context structure for this hysteresis process.
+ * \return True or false.
+ */
+static inline int32_t hysteresis_threshold(q31_t val, hysteresis_thresh_t *H) {
+    if (val > H->hyst_on) {
+        H->out_state = 0x01;
+    } else if (val < H->hyst_off) {
+        H->out_state = 0x00;
+    }
+    return H->out_state;
+}
+
+
+/**
+ * \brief Context structure for the hysteresis function.
+ *
+ */
+typedef struct
+{
+    int16_t hyst_on;     /**< Value determining the upper threshold */
+    int16_t hyst_off;    /**< Value determining the lower threshold */
+    int16_t out_state; /**< Actual state of the output */
+} hysteresis_thresh_i16_t;
+
+
+/**
+ * \brief Initialize a hyseresis process function.
+ *
+ * \param l_thresh Value determining the lower threshold.
+ * \param h_thresh Value determining the upper threshold.
+ * \param H The context structure for this hysteresis process.
+ */
+void hysteresis_init_i16(int16_t l_thresh, int16_t h_thresh, hysteresis_thresh_i16_t *H);
+
+
+/**
+ * \brief Applies a threshold with hysteresis to a i16 value.
+ *
+ * \param val The input value.
+ * \param H The context structure for this hysteresis process.
+ * \return True or false.
+ */
+static inline int32_t hysteresis_threshold_i16(int16_t val, hysteresis_thresh_i16_t *H) {
+    if (val > H->hyst_on) {
+        H->out_state = 0x01;
+    } else if (val < H->hyst_off) {
+        H->out_state = 0x00;
+    }
+    return H->out_state;
+}
+
+
+/**
+ * \brief Checks if a value is within some delta of a nominal value.
+ *
+ * \param value The input value.
+ * \param nominal The nominal value.
+ * \param delta The delta applied above and below the nominal value.
+ * \return True if nominal - delta < value < nominal + delta.  Otherwise returns false.
+ */
+static inline int32_t check_delta_q31(q31_t value, q31_t nominal, q31_t delta) {
+    int32_t rval = 0;
+    if ((value >= __QSUB(nominal, delta))&&(value <= __QADD(nominal, delta))) {
+        rval = 1;
+    }
+    return rval;
+    //return 1;
+}
+
+/**
+ * \brief Checks if a value is within some delta of a nominal value.
+ *
+ * \param value The input value.
+ * \param nominal The nominal value.
+ * \param delta The delta applied above and below the nominal value.
+ * \return True if nominal - delta < value < nominal + delta.  Otherwise returns false.
+ */
+static inline int32_t check_delta_f32(float32_t value, float32_t nominal, float32_t delta) {
+    int32_t rval = 0;
+    if ((value >= nominal - delta)&&(value <= nominal + delta)) {
+        rval = 1;
+    }
+    return rval;
+    //return 1;
+}
+
 #endif
