@@ -23,6 +23,13 @@ typedef int16_t q15_t;
  */
 typedef int32_t q31_t;
 
+/**
+ * \brief A 32-bit floating point data type.
+ * 
+ * This is the same as the standard C single precision float type.
+*/
+typedef float float32_t;
+
 #endif
 
 /**
@@ -928,7 +935,6 @@ static inline int32_t check_delta_f32(float32_t value, float32_t nominal, float3
         rval = 1;
     }
     return rval;
-    //return 1;
 }
 
 #endif
