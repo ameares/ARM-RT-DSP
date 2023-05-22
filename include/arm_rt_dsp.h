@@ -400,7 +400,7 @@ static inline q31_t adc_process_sample_i16_q31(int16_t x, int16_t offset, q31_t 
 typedef struct {
     acc63_t acc; //!< A 64-bit accumulator.
     uint16_t sh; //!< The window size is equal to 2^sh.
-} filter_ma_a63_t;
+} filter_pma_a63_t;
 
 
 /**
@@ -410,7 +410,7 @@ typedef struct {
  * \param param The filter's configuration and state data.
  * \return A new filtered output sample.
  */
-static inline q31_t FilterMA_Q31(q31_t inx, filter_ma_a63_t *param) {
+static inline q31_t filter_pma_q31(q31_t inx, filter_pma_a63_t *param) {
     q31_t y;
 
     // Accumulate
@@ -936,5 +936,8 @@ static inline int32_t check_delta_f32(float32_t value, float32_t nominal, float3
     }
     return rval;
 }
+
+
+
 
 #endif
