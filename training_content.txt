@@ -30,6 +30,8 @@ ARM-RT-DSP/
         ./common.c
 
 Here is my status journal for the project:
+5/21 - Added hysteresis and check delta functions to arm_rt_dsp.h/c.
+5/21 - Added continuous integration with Github actions.
 5/21 - Updated README.md.
 5/21 - Added some test cases for a ramp function.
 5/21 - Fixed VS Code c_cpp_properties.json file to include the include directory.
