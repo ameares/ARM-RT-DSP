@@ -29,7 +29,7 @@ This does not saturate.
 -----------------------------------------------------------------------------*/
 int16_t ramp_limit_i16(int16_t x, ramp_limit_i16_t *r) {
     int32_t delta = 0;
-
+ 
     delta = x - r->y;
 
     // inc is the limit of speed of movement from one number to the next.

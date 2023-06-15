@@ -45,7 +45,7 @@ typedef int64_t q63_t;
  * In order to stay consistent with the ARM DSP Q types, the sign bit is not
  * counted.
  */
-typedef int16_t acc15_t;
+typedef int16_t acc16_t;
 
 /**
  * \brief A 32-bit accumulator data type in 17.15 format.
@@ -54,14 +54,14 @@ typedef int16_t acc15_t;
  *
  * Does this name even make sense.  Maybe acc32_t was better or acc17_15_t or anything. AM
  */
-typedef int32_t acc31_t;
+typedef int32_t acc32_t;
 
 /**
  * \brief A 64-bit accumulator in 33.31 format.
  *
  * In order to stay consistent with the ARM DSP Q types, the sign bit is not counted.
  */
-typedef int64_t acc63_t;
+typedef int64_t acc64_t;
 
 /** \brief Macro for defining a q15_t constant value in the range [-1.0, 1.0). */
 #define Q15(x) ((q15_t)((x) < 0.999969482421875 ? ((x) >= -1 ? (x)*0x8000 : 0x8000) : 0x7FFF))
@@ -69,11 +69,11 @@ typedef int64_t acc63_t;
 /** \brief Macro for defining a q31_t constant value in the range [-1.0, 1.0). */
 #define Q31(x) ((q31_t)((x) < 1 ? ((x) >= -1 ? (x)*0x80000000 : 0x80000000) : 0x7FFFFFFF))
 
-/** \brief Macro for defining an \ref acc15_t constant value in the range [-255.0, 255.0). */
-#define ACC15(x) ((acc15_t)((x) < 255.9921875 ? ((x) >= -256 ? (x)*0x80 : 0x8000) : 0x7FFF))
+/** \brief Macro for defining an \ref acc16_t constant value in the range [-255.0, 255.0). */
+#define ACC16(x) ((acc16_t)((x) < 255.9921875 ? ((x) >= -256 ? (x)*0x80 : 0x8000) : 0x7FFF))
 
-/** \brief Macro for defining an \ref acc31_t constant value in the range [-65535.0, 65535.0). */
-#define ACC31(x) ((acc31_t)((x) < 65535.999969482421875 ? ((x) >= -65536 ? (x)*0x8000 : 0x80000000) : 0x7FFFFFFF))
+/** \brief Macro for defining an \ref acc32_t constant value in the range [-65535.0, 65535.0). */
+#define ACC32(x) ((acc32_t)((x) < 65535.999969482421875 ? ((x) >= -65536 ? (x)*0x8000 : 0x80000000) : 0x7FFFFFFF))
 
 
 // For when the arm dsp library isn't present.
@@ -398,7 +398,7 @@ static inline q31_t adc_process_sample_i16_q31(int16_t x, int16_t offset, q31_t 
  * up when the filter is used.  For glacially slow filters, winding up might take eons.
  */
 typedef struct {
-    acc63_t acc; //!< A 64-bit accumulator.
+    acc64_t acc; //!< A 64-bit accumulator.
     uint16_t sh; //!< The window size is equal to 2^sh.
 } filter_pma_a63_t;
 
@@ -412,7 +412,7 @@ typedef struct {
  */
 static inline q31_t filter_pma_q31(q31_t inx, filter_pma_a63_t *param) {
     q31_t y;
-
+ 
     // Accumulate
     param->acc += inx;
 
@@ -574,7 +574,7 @@ static inline uint16_t limit_u16(uint16_t val, uint16_t llim, uint16_t ulim) {
  * \param ulim Upper limit to be applied.
  * \return A value in the range [llim, ulim].
  */
-static inline acc31_t limit_acc31(acc31_t val, acc31_t llim, acc31_t ulim) {
+static inline acc32_t limit_acc31(acc32_t val, acc32_t llim, acc32_t ulim) {
     if (val > ulim) {
         val = ulim;
     }
