@@ -13,7 +13,8 @@
             "intelliSenseMode": "linux-gcc-x64",
             "browse": {
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
     "version": 4
