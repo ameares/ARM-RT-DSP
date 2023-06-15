@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -Wall -Wextra -std=c11 -I./include
+CFLAGS := -Wall -Wextra -std=c11 -I./include -fprofile-arcs -ftest-coverage
 LIBS := -lcunit
 
 # Directories
@@ -19,17 +19,17 @@ TEST_OBJECTS := $(patsubst $(TEST_DIR)/%.c,$(OBJ_DIR)/%.o,$(TESTS))
 EXECUTABLE := arm_rt_dsp
 TEST_EXECUTABLE := rt_dsp_test_runner
 
-.PHONY: all clean test
+.PHONY: all clean test coverage
 
 all: $(EXECUTABLE)
 
 # Build the main library
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ -fprofile-arcs -ftest-coverage
 
 # Build the test runner
 $(TEST_EXECUTABLE): $(TEST_OBJECTS) $(OBJECTS)
-	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
+	$(CC) $(CFLAGS) $^ -o $@ $(LIBS) -fprofile-arcs -ftest-coverage
 
 # Rule for building object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -44,5 +44,10 @@ $(OBJ_DIR)/%.o: $(TEST_DIR)/%.c
 test: clean $(TEST_EXECUTABLE)
 	./$(TEST_EXECUTABLE)
 
+# Run coverage
+coverage: test
+	gcov -r $(OBJ_DIR)/*.gcda
+
 clean:
 	rm -f $(OBJECTS) $(TEST_OBJECTS) $(EXECUTABLE) $(TEST_EXECUTABLE)
+	rm -f $(OBJ_DIR)/*.gcda $(OBJ_DIR)/*.gcno $(OBJ_DIR)/*.gcov
