@@ -31,7 +31,9 @@ ARM-RT-DSP/
         ./common.c
 
 Here is my status journal for the project:
-6/14 - Achieved 25.76% test coverage, identified test failures and low coverage areas.
+6/19 - Added draft unit tests for limit and check delta functions.
+6/19 - Added draft unit tests for mul, min, max, and adc functions.
+6/14 - Identified test failures and low coverage areas.
 6/14 - Added test coverage measurement to makefile.
 6/14 - Cleaned up git repository and learned about git pull requests.
 6/3 - Renamed acc15_t to acc16_t and acc31_t to acc32_t project-wide.
