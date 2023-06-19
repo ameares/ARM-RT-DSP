@@ -13,10 +13,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Cache CUnit
+      uses: actions/cache@v2
+      with:
+        path: ~/cunit
+        key: ${{ runner.os }}-cunit-${{ hashFiles('**/Makefile') }}
+
     - name: Install dependencies
-      run: sudo apt-get install -y libcunit1-dev
+      run: |
+        if [ ! -d "~/cunit" ]; then
+          sudo apt-get install -y libcunit1-dev
+        fi
+        
     - name: Test
       run: make test 2>&1 | tee test-output.txt
+      
     - name: Upload Test Output
       if: always()
       uses: actions/upload-artifact@v3
