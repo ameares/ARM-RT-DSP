@@ -31,6 +31,7 @@ ARM-RT-DSP/
         ./common.c
 
 Here is my status journal for the project:
+6/19 - Fixed most test failures; four ADC-related tests in Suite 3 remain.
 6/19 - Added draft unit tests for limit and check delta functions.
 6/19 - Added draft unit tests for mul, min, max, and adc functions.
 6/14 - Identified test failures and low coverage areas.
