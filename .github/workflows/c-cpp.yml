@@ -3,9 +3,16 @@ name: C/C++ CI
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - 'include/**'
+      - 'src/**'
+      - 'tests/**'
   pull_request:
     branches: [ "master" ]
-
+    paths:
+      - 'include/**'
+      - 'src/**'
+      - 'tests/**'
 jobs:
   build:
 
