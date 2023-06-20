@@ -15,13 +15,18 @@ ARM-RT-DSP/
     ./README.md
     ./LICENSE.txt
     ./Makefile
+    ./Doxyfile
     ./training_content.txt
     ./docs/
         ./usage_guide.md
         ./api_reference.md
+    ./doxy/
+    ./doxy_out/
+    ./obj/
     ./tests/
         ./suite1.c
         ./suite2.c
+        ./suite3.c
         ./test_main.c
     ./include/
         ./arm_rt_dsp.h
@@ -31,6 +36,7 @@ ARM-RT-DSP/
         ./common.c
 
 Here is my status journal for the project:
+6/20 - Added Doxygen configuration file.
 6/19 - Fixed most test failures; four ADC-related tests in Suite 3 remain.
 6/19 - Added draft unit tests for limit and check delta functions.
 6/19 - Added draft unit tests for mul, min, max, and adc functions.
