@@ -88,7 +88,7 @@ Test suite2_tests[] = {
     {"test_check_delta_i32", test_check_delta_f32},
     // Add more tests here as needed
 };
-
+  
 Test suite3_tests[] = {
     {"test_adc_process_sample_q15", test_adc_process_sample_q15},
     {"test_adc_process_sample_q31", test_adc_process_sample_q31},

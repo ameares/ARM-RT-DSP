@@ -63,7 +63,7 @@ void test_ramp_limit_i16_neg(void) {
         CU_ASSERT_EQUAL(ramp_limit_i16(test_inputs[i], &ramp), expected_outputs[i]);
     }
 }
-
+  
 // Test case 3: ramp_limit_i16 demonstrates operation at the upper limit, ulim.
 void test_ramp_limit_i16_ulim(void) {
     ramp_limit_i16_t ramp;

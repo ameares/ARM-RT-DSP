@@ -7,7 +7,7 @@
 #include "common.h"
 #include "arm_rt_dsp.h"
 
-
+  
 // ADC Sample Processing Test Functions
 
 void test_adc_process_sample_q15() {
