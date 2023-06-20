@@ -9,6 +9,7 @@ on:
     branches: [ "master" ]
     paths:
       - 'include/**'
+  workflow_dispatch:
 
 jobs:
   generate-docs:
