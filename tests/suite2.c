@@ -49,13 +49,13 @@ void test_ramp_limit_i16_pos(void) {
 // Test case 2: ramp_limit_i16 demonstrates a ramp with a negative increment.
 void test_ramp_limit_i16_neg(void) {
     ramp_limit_i16_t ramp;
-    int16_t test_inputs[] = {0, 2, 10, 10, 10, 10};
+    int16_t test_inputs[] = {0, -2, -10, -10, -10, -10};
     int16_t expected_outputs[] = {0, -2, -4, -6, -8, -10};
 
     // Initialize the ramp
     ramp.llim = -1000;
     ramp.ulim = 0;
-    ramp.inc = -2;
+    ramp.inc = 2;
     ramp_limit_init_i16(0, &ramp);
 
     // Test ramp_limit_i16 for each input
@@ -85,8 +85,8 @@ void test_ramp_limit_i16_ulim(void) {
 // Test case 4: ramp_limit_i16 demonstrates operation at the lower limit, llim.
 void test_ramp_limit_i16_llim(void) {
     ramp_limit_i16_t ramp;
-    int16_t test_inputs[] = {0, 2, -12, -12, -12, -12, -12};
-    int16_t expected_outputs[] = {0, 2, 4, 6, 8, 10, 10};
+    int16_t test_inputs[] = {0, -2, -12, -12, -12, -12, -12};
+    int16_t expected_outputs[] = {0, -2, -4, -6, -8, -10, -10};
 
     // Initialize the ramp
     ramp.llim = -10;
