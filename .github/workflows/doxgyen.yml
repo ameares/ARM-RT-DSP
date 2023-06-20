@@ -36,9 +36,25 @@ jobs:
       run: |
         cd ./doxy_out/latex
         make 
+        
+    - name: Rename and Move PDF Documentation
+      run: |
+        mv ./doxy_out/latex/refman.pdf ./docs/arm_rt_dsp_guide.pdf
 
     - name: Upload PDF Documentation
       uses: actions/upload-artifact@v2
       with:
         name: PDFDocumentation
-        path: ./doxy_out/latex/refman.pdf
+        path: ./docs/arm_rt_dsp_guide.pdf
+
+    - name: Commit PDF Documentation to repo
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add ./docs/arm_rt_dsp_guide.pdf
+        if [ -z "$(git status --porcelain)" ]; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update documentation PDF"
+          git push
+        fi
