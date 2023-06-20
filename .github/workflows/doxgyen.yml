@@ -1,0 +1,30 @@
+name: Generate and Publish Documentation
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  generate-docs:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Install Doxygen and Graphviz
+      run: sudo apt-get install doxygen graphviz
+
+    - name: Generate Docs
+      run: doxygen Doxyfile 2>&1 | tee doxygen-output.txt
+      
+    - name: Upload Doxygen Output
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: DoxygenOutput
+        path: ./doxygen-output.txt
+        
