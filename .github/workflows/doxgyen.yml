@@ -56,5 +56,5 @@ jobs:
           echo "No changes to commit"
         else
           git commit -m "Update documentation PDF"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/yourusername/yourrepo.git
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/ameares/ARM-RT-DSP.git
         fi
