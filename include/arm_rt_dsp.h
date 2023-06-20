@@ -1,4 +1,8 @@
-
+/**
+ * \file arm_rt_dsp.h
+ * \brief This file contains the definitions of the ARM DSP types and functions.
+ * 
+*/
 
 #ifndef ARM_RT_DSP_
 #define ARM_RT_DSP_
