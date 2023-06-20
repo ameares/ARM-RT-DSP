@@ -51,14 +51,18 @@ void test_check_delta_f32();
 Test suite1_tests[] = {
     {"test_abs_q15", test_abs_q15},
     {"test_abs_q31", test_abs_q31},
-    {"test_abs_sat_q15", test_abs_sat_q15},
-    {"test_abs_sat_q31", test_abs_sat_q31},
     {"test_mul_q15", test_mul_q15},
     {"test_mul_q31", test_mul_q31},
+    {"test_abs_sat_q15", test_abs_sat_q15},
+    {"test_abs_sat_q31", test_abs_sat_q31},
     {"test_mulsat_q15", test_mulsat_q15},
     {"test_mulsat_q31", test_mulsat_q31},
     {"test_min_q31", test_min_q31},
     {"test_max_q31", test_max_q31},
+    {"test_adc_process_sample_q15", test_adc_process_sample_q15},
+    {"test_adc_process_sample_q31", test_adc_process_sample_q31},
+    {"test_adc_process_sample_u_q31", test_adc_process_sample_u_q31},
+    {"test_adc_process_sample_i16_q31", test_adc_process_sample_i16_q31},
     {"test_limit_f32", test_limit_f32},
     {"test_upper_limit_q31", test_upper_limit_q31},
     {"test_lower_limit_q31", test_lower_limit_q31},
@@ -89,19 +93,10 @@ Test suite2_tests[] = {
     // Add more tests here as needed
 };
 
-Test suite3_tests[] = {
-    {"test_adc_process_sample_q15", test_adc_process_sample_q15},
-    {"test_adc_process_sample_q31", test_adc_process_sample_q31},
-    {"test_adc_process_sample_u_q31", test_adc_process_sample_u_q31},
-    {"test_adc_process_sample_i16_q31", test_adc_process_sample_i16_q31},
-    // Add more tests here as needed
-};
-
 // Suites
 Suite suites[] = {
     {"Suite_1", suite1_tests, sizeof(suite1_tests) / sizeof(Test)},
     {"Suite_2", suite2_tests, sizeof(suite2_tests) / sizeof(Test)},
-    {"Suite_3", suite3_tests, sizeof(suite3_tests) / sizeof(Test)}
     // Add more suites here as needed
 };
 
