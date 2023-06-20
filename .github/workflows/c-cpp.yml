@@ -3,9 +3,16 @@ name: C/C++ CI
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - 'include/**'
+      - 'src/**'
+      - 'tests/**'
   pull_request:
     branches: [ "master" ]
-
+    paths:
+      - 'include/**'
+      - 'src/**'
+      - 'tests/**'
 jobs:
   build:
 
@@ -15,7 +22,7 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Cache CUnit
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/cunit
         key: ${{ runner.os }}-cunit-${{ hashFiles('**/Makefile') }}
