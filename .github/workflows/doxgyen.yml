@@ -27,4 +27,18 @@ jobs:
       with:
         name: DoxygenOutput
         path: ./doxygen-output.txt
-        
+
+    - name: Install pdflatex dependencies
+      run: |
+        sudo apt-get install -y texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra
+
+    - name: Generate PDF Documentation
+      run: |
+        cd ./doxy_gen/latex
+        make 
+
+    - name: Upload PDF Documentation
+      uses: actions/upload-artifact@v2
+      with:
+        name: PDFDocumentation
+        path: ./doxy_gen/latex/refman.pdf
