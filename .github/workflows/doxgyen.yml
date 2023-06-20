@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Install Doxygen and Graphviz
       run: sudo apt-get install doxygen graphviz
@@ -23,7 +23,7 @@ jobs:
       
     - name: Upload Doxygen Output
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: DoxygenOutput
         path: ./doxygen-output.txt
@@ -42,7 +42,7 @@ jobs:
         mv ./doxy_out/latex/refman.pdf ./docs/arm_rt_dsp_guide.pdf
 
     - name: Upload PDF Documentation
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: PDFDocumentation
         path: ./docs/arm_rt_dsp_guide.pdf
