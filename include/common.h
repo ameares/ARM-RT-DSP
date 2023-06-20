@@ -1,6 +1,6 @@
-/*
-My common header file for all my C projects.
-
+/**
+ * \file common.h
+ * \brief Common definitions for unit tests.
 */
 
 #ifndef _COMMON_H_
