@@ -34,11 +34,11 @@ jobs:
 
     - name: Generate PDF Documentation
       run: |
-        cd ./doxy_gen/latex
+        cd ./doxy_out/latex
         make 
 
     - name: Upload PDF Documentation
       uses: actions/upload-artifact@v2
       with:
         name: PDFDocumentation
-        path: ./doxy_gen/latex/refman.pdf
+        path: ./doxy_out/latex/refman.pdf
