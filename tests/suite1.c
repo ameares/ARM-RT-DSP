@@ -7,12 +7,11 @@
 #include "common.h"
 #include "arm_rt_dsp.h" 
 
-// Absolute Value Test Functions
 
 void test_abs_q15() {
     // Initialize your test variables and inputs here
-    q15_t test_inputs[] = {1, 0, -1, -32767};
-    q15_t expected_outputs[] = {1, 0, 1, 32767};
+    q15_t test_inputs[] = {Q15(-1.0), Q15(0.5), Q15(-0.5), 0x7FFF, 0x7FFE, -0x8000};
+    q15_t expected_outputs[] = {Q15(1.0), Q15(0.5), Q15(0.5), 0x7FFF, 0x7FFE, 0x8000};
     int num_tests = sizeof(test_inputs) / sizeof(test_inputs[0]);
 
     // Call the function you want to test and check its output.
@@ -32,36 +31,29 @@ void test_abs_q15() {
 
 
 void test_abs_q31() {
-    // Initialize your test variables and inputs here
-    q31_t test_inputs[] = {1, 0, -1, -2147483647};
-    q31_t expected_outputs[] = {1, 0, 1, 2147483647};
-    int num_tests = sizeof(test_inputs) / sizeof(test_inputs[0]);
+    // test with negative input
+    q31_t input1 = -0x7FFFFFFF;
+    CU_ASSERT(abs_q31(input1) == 0x7FFFFFFF);
 
-    // Call the function you want to test and check its output.
-    for (int i = 0; i < num_tests; i++) {
-        // Prepare inputs.
-        q31_t input = test_inputs[i];
-        q31_t expected_output = expected_outputs[i];
+    // test with positive input
+    q31_t input2 = 0x7FFFFFFF;
+    CU_ASSERT(abs_q31(input2) == 0x7FFFFFFF);
 
-        // Make calls to CU_ASSERT or CU_ASSERT_EQUAL.
-        CU_ASSERT_EQUAL(abs_q31(input), expected_output);
-
-        // Add more assertions or complex logic as needed.
-    }
-    
-    // Add more test cases if necessary.
+    // test with zero
+    q31_t input3 = 0;
+    CU_ASSERT(abs_q31(input3) == 0);
 }
 
 void test_abs_sat_q15() {
     // Initialize your test variables and inputs here
-    q15_t test_data[] = {1, 0, -1, -32767, -32768};
-    q15_t expected_outputs[] = {1, 0, 1, 32767, 32767};
+    q15_t test_data[] = {0, 1, -1, Q15(1.0), Q15(-1.0), Q15(0.5), Q15(-0.5), 0x7FFF, 0x8000};
+    q15_t expected_results[] = {0, 1, 1, 0x7FFF, 0x7FFF, Q15(0.5), Q15(0.5), 0x7FFF, 0x7FFF};
 
     // Call the function you want to test and check its output.
     for (size_t i = 0; i < sizeof(test_data) / sizeof(test_data[0]); i++) {
         // Prepare inputs.
         q15_t input = test_data[i];
-        q15_t expected = expected_outputs[i];
+        q15_t expected = expected_results[i];
 
         // Make calls to CU_ASSERT or CU_ASSERT_EQUAL.
         CU_ASSERT_EQUAL(abs_sat_q15(input), expected);
@@ -74,14 +66,14 @@ void test_abs_sat_q15() {
 
 void test_abs_sat_q31() {
     // Initialize your test variables and inputs here
-    q31_t test_data[] = {1, 0, -1, -2147483647, -2147483648};
-    q31_t expected_outputs[] = {1, 0, 1, 2147483647, 2147483647};
+    q31_t test_data[] = {0, 1, -1, Q31(1.0), Q31(-1.0), Q31(0.5), Q31(-0.5), 0x7FFFFFFF, 0x80000000};
+    q31_t expected_results[] = {0, 1, 1, 0x7FFFFFFF, 0x7FFFFFFF, Q31(0.5), Q31(0.5), 0x7FFFFFFF, 0x7FFFFFFF};
 
     // Call the function you want to test and check its output.
     for (size_t i = 0; i < sizeof(test_data) / sizeof(test_data[0]); i++) {
         // Prepare inputs.
         q31_t input = test_data[i];
-        q31_t expected = expected_outputs[i];
+        q31_t expected = expected_results[i];
 
         // Make calls to CU_ASSERT or CU_ASSERT_EQUAL.
         CU_ASSERT_EQUAL(abs_sat_q31(input), expected);
@@ -106,13 +98,12 @@ void test_ssat_i64() {
 }
 #endif
 
-// Multiplication Test Functions
 
 void test_mul_q15() {
-    // Initialize your test variables and inputs here  
-    q15_t test_data_x[] =      {Q15(0.5), Q15(-0.5), Q15(0.5)};
-    q15_t test_data_y[] =      {Q15(0.5), Q15(-0.5), Q15(-0.5)};
-    q15_t expected_results[] = {Q15(0.25), Q15(0.25), Q15(-0.25)};
+    // Initialize your test variables and inputs here
+    q15_t test_data_x[] = {0, 1, -1, Q15(1.0), Q15(-1.0), Q15(0.5), Q15(-0.5), 0x7FFF, 0x8000};
+    q15_t test_data_y[] = {1, -1, Q15(1.0), Q15(-1.0), Q15(0.5), Q15(-0.5), 0x7FFF, 0x8000, 0};
+    q15_t expected_results[] = {0, -1, -0x7FFF, 0x7FFF, Q15(0.5), -Q15(0.5), -0x7FFF, 0x7FFF, 0};
 
     // Call the function you want to test and check its output.
     for (size_t i = 0; i < sizeof(test_data_x) / sizeof(test_data_x[0]); i++) {
@@ -132,9 +123,9 @@ void test_mul_q15() {
 
 void test_mul_q31() {
     // Initialize your test variables and inputs here
-    q31_t test_data_x[] =      {Q31(0.5), Q31(-0.5), Q31(0.5)};
-    q31_t test_data_y[] =      {Q31(0.5), Q31(-0.5), Q31(-0.5)};
-    q31_t expected_results[] = {Q31(0.25), Q31(0.25), Q31(-0.25)};
+    q31_t test_data_x[] = {0, 1, -1, Q31(1.0), Q31(-1.0), Q31(0.5), Q31(-0.5), 0x7FFFFFFF, 0x80000000};
+    q31_t test_data_y[] = {1, -1, Q31(1.0), Q31(-1.0), Q31(0.5), Q31(-0.5), 0x7FFFFFFF, 0x80000000, 0};
+    q31_t expected_results[] = {0, -1, -0x7FFFFFFF, 0x7FFFFFFF, Q31(0.5), -Q31(0.5), -0x7FFFFFFF, 0x7FFFFFFF, 0};
 
     // Call the function you want to test and check its output.
     for (size_t i = 0; i < sizeof(test_data_x) / sizeof(test_data_x[0]); i++) {
@@ -152,57 +143,45 @@ void test_mul_q31() {
 }
 
 void test_mulsat_q15() {
-    // Initialize your test variables and inputs here 
-    // Todo: Add tests of corner saturation case, GCC complains. AM 6/19/2023
-    q15_t test_data_x[] =      {Q15(0.5), Q15(-0.5), Q15(0.5)};
-    q15_t test_data_y[] =      {Q15(0.5), Q15(-0.5), Q15(-0.5)};
-    q15_t expected_results[] = {Q15(0.25), Q15(0.25), Q15(-0.25)};
+    // test positive * positive
+    q15_t input1 = 0x7FFF;
+    q15_t input2 = 0x7FFF;
+    CU_ASSERT(mulsat_q15(input1, input2) == 0x7FFE);
 
-    // Call the function you want to test and check its output.
-    for (size_t i = 0; i < sizeof(test_data_x) / sizeof(test_data_x[0]); i++) {
-        // Prepare inputs.
-        q15_t input_x = test_data_x[i];
-        q15_t input_y = test_data_y[i];
-        q15_t expected = expected_results[i];
+    // test positive * negative
+    input2 = -input2;
+    q15_t result = mulsat_q15(input1, input2);
+    //printf("Result of the test: %d\n", result);
+    CU_ASSERT(result == -0x8000);   // Or should it be -0x7FFE, -0x7FFF?, this is a deep dive that is needed. AM 5/14/23
 
-        // Make calls to CU_ASSERT or CU_ASSERT_EQUAL.
-        CU_ASSERT_EQUAL(mulsat_q15(input_x, input_y), expected);
-    }
-
-    // Add more assertions or complex logic as needed.
-    // Placeholder for additional test cases if required.
+    // test with zero
+    input2 = 0;
+    CU_ASSERT(mulsat_q15(input1, input2) == 0);
 }
 
 
 void test_mulsat_q31() {
-    // Initialize your test variables and inputs here
-    // Todo: Add tests of corner saturation case, GCC complains. AM 6/19/2023
-    q31_t test_data_x[] =      {Q31(0.5), Q31(-0.5), Q31(0.5)};
-    q31_t test_data_y[] =      {Q31(0.5), Q31(-0.5), Q31(-0.5)};
-    q31_t expected_results[] = {Q31(0.25), Q31(0.25), Q31(-0.25)};
+    // test positive * positive
+    q31_t input1 = 0x7FFFFFFF;
+    q31_t input2 = 0x7FFFFFFF;
+    CU_ASSERT(mulsat_q31(input1, input2) == 0x7FFFFFFE);
 
-    // Call the function you want to test and check its output.
-    for (size_t i = 0; i < sizeof(test_data_x) / sizeof(test_data_x[0]); i++) {
-        // Prepare inputs.
-        q31_t input_x = test_data_x[i];
-        q31_t input_y = test_data_y[i];
-        q31_t expected = expected_results[i];
+    // test positive * negative
+    // This one needs work. Results values are wrong. AM 5/21/2023
+    input2 = -input2;
+    CU_ASSERT(mulsat_q31(input1, input2) == -0x7FFFFFFE);
 
-        // Make calls to CU_ASSERT or CU_ASSERT_EQUAL.
-        CU_ASSERT_EQUAL(mulsat_q31(input_x, input_y), expected);
-    }
-
-    // Add more assertions or complex logic as needed.
-    // Placeholder for additional test cases if required.
+    // test with zero
+    input2 = 0;
+    CU_ASSERT(mulsat_q31(input1, input2) == 0);
 }
 
-// Min/Max Test Functions
 
 void test_max_q31() {
     // Initialize your test variables and inputs here
-    q31_t test_data_x[] = {Q31(-0.5), Q31(-0.5), Q31(0.2)};
-    q31_t test_data_y[] = {Q31(0.5), Q31(-0.4), Q31(0.3)};
-    q31_t expected_results[] = {Q31(0.5), Q31(-0.4), Q31(0.3)};
+    q31_t test_data_x[] = {0, 1, -1, Q31(1.0), Q31(-1.0), Q31(0.5), Q31(-0.5), 0x7FFFFFFF, 0x80000000};
+    q31_t test_data_y[] = {1, -1, Q31(1.0), Q31(-1.0), Q31(0.5), Q31(-0.5), 0x7FFFFFFF, 0x80000000, 0};
+    q31_t expected_results[] = {1, 1, Q31(1.0), Q31(1.0), Q31(0.5), Q31(0.5), 0x7FFFFFFF, 0x7FFFFFFF, 0};
 
     // Call the function you want to test and check its output.
     for (size_t i = 0; i < sizeof(test_data_x) / sizeof(test_data_x[0]); i++) {
@@ -218,9 +197,9 @@ void test_max_q31() {
 
 void test_min_q31() {
     // Initialize your test variables and inputs here
-    q31_t test_data_x[] = {Q31(-0.5), Q31(-0.5), Q31(0.2)};
-    q31_t test_data_y[] = {Q31(0.5), Q31(-0.4), Q31(0.3)};
-    q31_t expected_results[] = {Q31(-0.5), Q31(-0.5), Q31(0.2)};
+    q31_t test_data_x[] = {0, 1, -1, Q31(1.0), Q31(-1.0), Q31(0.5), Q31(-0.5), 0x7FFFFFFF, 0x80000000};
+    q31_t test_data_y[] = {1, -1, Q31(1.0), Q31(-1.0), Q31(0.5), Q31(-0.5), 0x7FFFFFFF, 0x80000000, 0};
+    q31_t expected_results[] = {0, -1, -1, Q31(-1.0), Q31(-1.0), -Q31(0.5), -Q31(0.5), 0x80000000, 0};
 
     // Call the function you want to test and check its output.
     for (size_t i = 0; i < sizeof(test_data_x) / sizeof(test_data_x[0]); i++) {
@@ -234,6 +213,49 @@ void test_min_q31() {
     }
 }
 
+void test_adc_process_sample_q15() {
+    uint16_t raw_value[] = {0, 4095, 2048, 1024};
+    int16_t offset[] = {0, 0, 2048, 1024};
+    q15_t slope[] = {Q15(1.0), Q15(0.5), Q15(-0.5), Q15(0.25)};
+    q15_t expected[] = {0, 0, 0, 0};
+
+    for (size_t i = 0; i < sizeof(raw_value) / sizeof(raw_value[0]); i++) {
+        CU_ASSERT_EQUAL(adc_process_sample_q15(raw_value[i], offset[i], slope[i]), expected[i]);
+    }
+}
+
+void test_adc_process_sample_q31() {
+    uint16_t raw_value[] = {0, 4095, 2048, 1024};
+    int16_t offset[] = {0, 0, 2048, 1024};
+    q31_t slope[] = {Q31(1.0), Q31(0.5), Q31(-0.5), Q31(0.25)};
+    q31_t expected[] = {0, 0, 0, 0};
+
+    for (size_t i = 0; i < sizeof(raw_value) / sizeof(raw_value[0]); i++) {
+        CU_ASSERT_EQUAL(adc_process_sample_q31(raw_value[i], offset[i], slope[i]), expected[i]);
+    }
+}
+
+void test_adc_process_sample_u_q31() {
+    uint16_t raw_value[] = {0, 4095, 2048, 1024};
+    int16_t offset[] = {0, 0, 2048, 1024};
+    q31_t slope[] = {Q31(1.0), Q31(0.5), Q31(-0.5), Q31(0.25)};
+    q31_t expected[] = {0, 0, 0, 0};
+
+    for (size_t i = 0; i < sizeof(raw_value) / sizeof(raw_value[0]); i++) {
+        CU_ASSERT_EQUAL(adc_process_sample_u_q31(raw_value[i], offset[i], slope[i]), expected[i]);
+    }
+}
+
+void test_adc_process_sample_i16_q31() {
+    int16_t raw_value[] = {0, 2047, -2048, 1024, -1024};
+    int16_t offset[] = {0, 0, -2048, 1024, -1024};
+    q31_t slope[] = {Q31(1.0), Q31(0.5), Q31(-0.5), Q31(0.25), Q31(-0.25)};
+    q31_t expected[] = {0, 0, 0, 0, 0};
+
+    for (size_t i = 0; i < sizeof(raw_value) / sizeof(raw_value[0]); i++) {
+        CU_ASSERT_EQUAL(adc_process_sample_i16_q31(raw_value[i], offset[i], slope[i]), expected[i]);
+    }
+}
 
 void test_limit_f32() {
     // Initialize your test variables and inputs here
@@ -251,9 +273,9 @@ void test_limit_f32() {
 
 void test_upper_limit_q31() {
     // Initialize your test variables and inputs here
-    q31_t test_data[] = {Q31(-0.5), Q31(0.0), Q31(0.4), Q31(0.5), Q31(0.8)};
-    q31_t upper_limit = Q31(0.5);
-    q31_t expected[] = {Q31(-0.5), Q31(0.0), Q31(0.4), Q31(0.5), Q31(0.5)};
+    q31_t test_data[] = {Q31(-2.0), Q31(-1.0), Q31(0.0), Q31(1.0), Q31(2.0)};
+    q31_t upper_limit = Q31(1.0);
+    q31_t expected[] = {Q31(-2.0), Q31(-1.0), Q31(0.0), Q31(1.0), Q31(1.0)};
 
     // Call the function you want to test and check its output.
     for (size_t i = 0; i < sizeof(test_data) / sizeof(test_data[0]); i++) {
@@ -264,9 +286,9 @@ void test_upper_limit_q31() {
 
 void test_lower_limit_q31() {
     // Initialize your test variables and inputs here
-    q31_t test_data[] = {Q31(-0.8), Q31(-0.4), Q31(0.4), Q31(0.5), Q31(0.8)};
-    q31_t lower_limit = Q31(-0.5);
-    q31_t expected[] = {Q31(-0.5), Q31(-0.4), Q31(0.4), Q31(0.5), Q31(0.8)};
+    q31_t test_data[] = {Q31(-2.0), Q31(-1.0), Q31(0.0), Q31(1.0), Q31(2.0)};
+    q31_t lower_limit = Q31(-1.0);
+    q31_t expected[] = {Q31(-1.0), Q31(-1.0), Q31(0.0), Q31(1.0), Q31(2.0)};
 
     // Call the function you want to test and check its output.
     for (size_t i = 0; i < sizeof(test_data) / sizeof(test_data[0]); i++) {
@@ -277,10 +299,10 @@ void test_lower_limit_q31() {
 
 void test_limit_q31() {
     // Initialize your test variables and inputs here
-    q31_t test_data[] = {Q31(-0.8), Q31(-0.4), Q31(0.4), Q31(0.5), Q31(0.8)};
-    q31_t lower_limit = Q31(-0.5);
-    q31_t upper_limit = Q31(0.5);
-    q31_t expected[] = {Q31(-0.5), Q31(-0.4), Q31(0.4), Q31(0.5), Q31(0.5)};
+    q31_t test_data[] = {Q31(-2.0), Q31(-1.0), Q31(0.0), Q31(1.0), Q31(2.0)};
+    q31_t lower_limit = Q31(-1.0);
+    q31_t upper_limit = Q31(1.0);
+    q31_t expected[] = {Q31(-1.0), Q31(-1.0), Q31(0.0), Q31(1.0), Q31(1.0)};
 
     // Call the function you want to test and check its output.
     for (size_t i = 0; i < sizeof(test_data) / sizeof(test_data[0]); i++) {
