@@ -1,4 +1,4 @@
 obj/
-doxy_out/
+doxy_out/*
 .vscode/
 ARM-RT-DSP.code-workspace

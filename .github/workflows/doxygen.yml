@@ -1,0 +1,66 @@
+name: Generate and Publish Documentation
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'include/**'
+  pull_request:
+    branches: [ "master" ]
+    paths:
+      - 'include/**'
+  workflow_dispatch:
+
+jobs:
+  generate-docs:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install Doxygen and Graphviz
+      run: sudo apt-get install doxygen graphviz
+
+    - name: Generate Docs
+      run: doxygen Doxyfile 2>&1 | tee doxygen-output.txt
+      continue-on-error: false
+      
+    - name: Upload Doxygen Output
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: DoxygenOutput
+        path: ./doxygen-output.txt
+
+    - name: Install pdflatex dependencies
+      run: |
+        sudo apt-get install -y texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra
+
+    - name: Generate PDF Documentation
+      run: |
+        cd ./doxy_out/latex
+        make 
+        
+    - name: Rename and Move PDF Documentation
+      run: |
+        mv ./doxy_out/latex/refman.pdf ./docs/arm_rt_dsp_guide.pdf
+
+    - name: Upload PDF Documentation
+      uses: actions/upload-artifact@v3
+      with:
+        name: PDFDocumentation
+        path: ./docs/arm_rt_dsp_guide.pdf
+
+    - name: Commit PDF Documentation to repo
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add ./docs/arm_rt_dsp_guide.pdf
+        if [ -z "$(git status --porcelain)" ]; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update documentation PDF"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/ameares/ARM-RT-DSP
+        fi
