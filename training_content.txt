@@ -15,10 +15,12 @@ ARM-RT-DSP/
     ./README.md
     ./LICENSE.txt
     ./Makefile
+    ./Doxyfile
     ./training_content.txt
     ./docs/
         ./usage_guide.md
         ./api_reference.md
+    ./doxy_out/
     ./tests/
         ./suite1.c
         ./suite2.c
@@ -26,6 +28,8 @@ ARM-RT-DSP/
     ./include/
         ./arm_rt_dsp.h
         ./common.h
+    ./scripts/
+        ./plot_csv.py
     ./src/
         ./arm_rt_dsp.c
         ./common.c

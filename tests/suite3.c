@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <CUnit/Basic.h>
 #include <CUnit/CUnit.h>
-
-// Include the header file for abs_sat_q31 function
 #include "common.h"
 #include "arm_rt_dsp.h"
 

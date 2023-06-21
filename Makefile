@@ -6,6 +6,8 @@ LIBS := -lcunit
 SRC_DIR := src
 TEST_DIR := tests
 OBJ_DIR := obj
+TEST_OUT_DIR := tests_out
+SCRIPT_DIR := scripts
 
 # Source and test files
 SOURCES := $(wildcard $(SRC_DIR)/*.c)
@@ -19,7 +21,7 @@ TEST_OBJECTS := $(patsubst $(TEST_DIR)/%.c,$(OBJ_DIR)/%.o,$(TESTS))
 EXECUTABLE := arm_rt_dsp
 TEST_EXECUTABLE := rt_dsp_test_runner
 
-.PHONY: all clean test coverage
+.PHONY: all clean test coverage plot
 
 all: $(EXECUTABLE)
 
@@ -47,6 +49,13 @@ test: clean $(TEST_EXECUTABLE)
 # Run coverage
 coverage: test
 	gcov -r $(OBJ_DIR)/*.gcda
+
+# Generate plots from CSV files
+plot:
+	for csv in $(TEST_OUT_DIR)/*.csv; do \
+		png="$${csv%.csv}.png"; \
+		python3 $(SCRIPT_DIR)/plot_csv.py "$$csv" "$$png"; \
+	done
 
 clean:
 	rm -f $(OBJECTS) $(TEST_OBJECTS) $(EXECUTABLE) $(TEST_EXECUTABLE)
