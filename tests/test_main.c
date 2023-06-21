@@ -47,6 +47,8 @@ void test_ramp_q31();
 void test_check_delta_q31();
 void test_check_delta_f32();
 
+void test_sequence_limit_i16(void);
+
 // Test functions for each suite
 Test suite1_tests[] = {
     {"test_abs_q15", test_abs_q15},
@@ -97,11 +99,16 @@ Test suite3_tests[] = {
     // Add more tests here as needed
 };
 
+Test suite4_tests[] = {
+    {"test_sequence_limit_i16", test_sequence_limit_i16},
+};
+
 // Suites
 Suite suites[] = {
     {"Suite_1", suite1_tests, sizeof(suite1_tests) / sizeof(Test)},
     {"Suite_2", suite2_tests, sizeof(suite2_tests) / sizeof(Test)},
-    {"Suite_3", suite3_tests, sizeof(suite3_tests) / sizeof(Test)}
+    {"Suite_3", suite3_tests, sizeof(suite3_tests) / sizeof(Test)},
+    {"Suite_4", suite4_tests, sizeof(suite4_tests) / sizeof(Test)}
     // Add more suites here as needed
 };
 
