@@ -429,6 +429,18 @@ static inline q31_t filter_pma_q31(q31_t inx, filter_pma_a63_t *param) {
     return y;
 }
 
+/**
+ * \defgroup limit_group Limit Functions
+ * 
+ * The limit functions can be used to limit the range of an input or output value in your
+ * control algorithm.  The functions are inlined to avoid function call overhead.  Variants
+ * allow limiting on only one side of the range or both sides.
+ * 
+ * \image html test_sequence_limit_i16.png "Sequential calls to limit_i16(val, llim, ulim)"
+ * \image latex test_sequence_limit_i16.png "Sequential calls to limit_i16(val, llim, ulim)" width=5cm
+ * 
+ * @{
+*/
 
 /**
  * \brief Limits the input value to both upper and lower limits.
@@ -534,6 +546,8 @@ static inline uint32_t limit_u32(uint32_t val, uint32_t llim, uint32_t ulim) {
 
 /**
  * \brief Limits the input value to the supplied upper and lower limits.
+ * 
+ * 
  *
  * \param val Input value to be limited.
  * \param llim Lower limit to be applied.
@@ -602,6 +616,10 @@ static inline uint16_t upper_limit_u16(uint16_t val, uint16_t ulim) {
     }
     return val;
 }
+
+/**
+ * @}
+*/
 
 
 /**
