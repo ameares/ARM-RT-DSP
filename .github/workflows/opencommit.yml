@@ -4,7 +4,7 @@ name: 'OpenCommit Action'
 #  push:
     # this list of branches is often enough,
     # but you may still ignore other public branches
-    branches-ignore: [master]
+    # branches-ignore: [master]
 
 jobs:
   opencommit:
