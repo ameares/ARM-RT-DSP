@@ -2,4 +2,8 @@ obj/
 doxy_out/*
 tests_out/*
 .vscode/
+*.gcov
+Pipfile.lock
+Pipfile
+rt_dsp_test_runner
 ARM-RT-DSP.code-workspace
