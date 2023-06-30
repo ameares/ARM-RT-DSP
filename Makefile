@@ -44,6 +44,7 @@ $(OBJ_DIR)/%.o: $(TEST_DIR)/%.c
 
 # Run the tests
 test: clean $(TEST_EXECUTABLE)
+	mkdir -p $(TEST_OUT_DIR)
 	./$(TEST_EXECUTABLE)
 
 # Run coverage
@@ -52,9 +53,11 @@ coverage: test
 
 # Generate plots from CSV files
 plot:
+	pipenv install -r $(SCRIPT_DIR)/requirements.txt
+	mkdir -p $(TEST_OUT_DIR)
 	for csv in $(TEST_OUT_DIR)/*.csv; do \
 		png="$${csv%.csv}.png"; \
-		python3 $(SCRIPT_DIR)/plot_csv.py "$$csv" "$$png"; \
+		pipenv run python $(SCRIPT_DIR)/plot_csv.py "$$csv" "$$png"; \
 	done
 
 clean:

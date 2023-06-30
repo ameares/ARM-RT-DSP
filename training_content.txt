@@ -31,6 +31,7 @@ ARM-RT-DSP/
         ./common.h
     ./scripts/
         ./plot_csv.py
+        ./requirements.txt
     ./src/
         ./arm_rt_dsp.c
         ./common.c
@@ -39,7 +40,7 @@ ARM-RT-DSP/
         ./doxygen.yml
 
 Here is my status journal for the project:
-6/21 - Added capability to generate plot images.
+6/21 - Added capability to generate plot images with plot_csv.py.
 6/21 - Added Github workflow for generating pdf documentation.
 6/20 - Added Doxygen configuration file.
 6/19 - Fixed most test failures; four ADC-related tests in Suite 3 remain.
