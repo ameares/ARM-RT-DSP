@@ -546,8 +546,6 @@ static inline uint32_t limit_u32(uint32_t val, uint32_t llim, uint32_t ulim) {
 
 /**
  * \brief Limits the input value to the supplied upper and lower limits.
- * 
- * 
  *
  * \param val Input value to be limited.
  * \param llim Lower limit to be applied.
