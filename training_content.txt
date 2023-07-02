@@ -30,6 +30,7 @@ ARM-RT-DSP/
         ./common.h
     ./scripts/
         ./plot_csv.py
+        ./requirements.txt
     ./src/
         ./arm_rt_dsp.c
         ./common.c
