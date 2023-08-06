@@ -7,8 +7,7 @@ I want to work on my Github project today.  This is an
 embedded C project that uses CUnit for unit testing.  The 
 project consists of ARM DSP library that I am adding unit
 tests to and publishing to GitHub.  I would like to make 
-improvements as I go along.  Please pick a task to work on 
-today.  Do not complete the task or write any code.
+improvements as I go along.  Pick a task to work on today.
 
 Here are the directories and files in the ARM-DT-DSP repository:
 ARM-RT-DSP/
@@ -40,6 +39,8 @@ ARM-RT-DSP/
         ./doxygen.yml
 
 Here is my status journal for the project:
+8/6 - Added PI/PID controllers to the library.
+6/30 - Updated gitignore to ignore gcov and compiled files.
 6/21 - Added capability to generate plot images with plot_csv.py.
 6/21 - Added Github workflow for generating pdf documentation.
 6/20 - Added Doxygen configuration file.
