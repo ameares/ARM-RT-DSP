@@ -179,3 +179,160 @@ void hysteresis_init_i16(int16_t l_thresh, int16_t h_thresh, hysteresis_thresh_i
     H->hyst_on = h_thresh;
     H->out_state = 0;
 }
+
+
+
+/*-----------------------------------------------------------------------------
+History:
+
+Notes:
+
+-----------------------------------------------------------------------------*/
+void iir_pi_init_q15(iir_pi_instance_q15 * S, int32_t resetStateFlag) {
+
+  // Derived coefficient A0
+  // QADD16 is a q-setting dual saturating operation.
+  S->A0 = __QADD16(S->Kp, S->Ki);
+  // Note Kp is strictly > 0
+  S->A1 = __QSUB16(0, S->Kp);
+
+  // Check whether state needs reset or not
+  if (resetStateFlag)
+  {
+    // Clear the state buffer.  The size will be always 2 samples
+    memset(S->state, 0, PI_Q15_STATE_BUFFER_SIZE * sizeof(q15_t));
+  }
+
+}
+
+
+/*-----------------------------------------------------------------------------
+History:
+
+Notes:
+
+-----------------------------------------------------------------------------*/
+void iir_pi_init_q31( iir_pi_instance_q31 *S, int32_t resetStateFlag)
+{
+  /* Run the below code for Cortex-M4 and Cortex-M3 */
+
+  /* Derived coefficient A0 */
+  S->A0 = __QADD(S->Kp, S->Ki);
+
+  /* Derived coefficient A1 */
+  S->A1 = 0 - S->Kp;
+
+  /* Check whether state needs reset or not */
+  if (resetStateFlag)
+  {
+    /* Clear the state buffer.  The size will be always 2 samples */
+    memset(S->state, 0, PI_Q31_STATE_BUFFER_SIZE * sizeof(q31_t));
+  }
+
+}
+
+
+/*-----------------------------------------------------------------------------
+History:
+
+Notes:
+
+-----------------------------------------------------------------------------*/
+void iir_pid_init_q31( iir_pid_instance_q31 *S, int32_t resetStateFlag)
+{
+  /* Run the below code for Cortex-M4 and Cortex-M3 */
+
+  /* Derived coefficient A0 */
+  //S->A0 = __QADD(__QADD(S->KAp, S->KAi), S->KAd);
+  S->A0 = __QADD(S->Kp, S->Ki);
+  S->A0d = S->Kd;
+
+  /* Derived coefficient A1 */
+  //S->A1 = 0 - S->KAp - S->KAd - S->KAd; //<<1);
+  S->A1 = 0 - S->Kp;
+  S->A1d = 0 - S->Kd - S->Kd;
+
+  //S->A2 = S->KAd;
+  S->A2d = S->Kd;
+
+  /* Check whether state needs reset or not */
+  if (resetStateFlag)
+  {
+    /* Clear the state buffer.  The size will be always 2 samples */
+    memset(S->state, 0, PID_Q31_STATE_BUFFER_SIZE * sizeof(q31_t));
+    S->dstate = 0;
+    S->fdstate = 0;
+  }
+
+}
+
+
+/*-----------------------------------------------------------------------------
+History:
+
+Notes:
+
+-----------------------------------------------------------------------------*/
+void iir_pi_init_v2_q31( iir_pi_instance_v2_q31 *S, int32_t resetStateFlag)
+{
+  /* Run the below code for Cortex-M4 and Cortex-M3 */
+
+  /* Derived coefficient A0 */
+  S->A0 = __QADD(S->KAp, S->KAi);
+
+  /* Derived coefficient A1 */
+  S->A1 = 0 - S->KAp;
+
+  /* Derived coefficient A0 */
+  S->B0 = __QADD(S->KBp, S->KBi);
+
+  /* Derived coefficient A1 */
+  S->B1 = 0 - S->KBp;
+
+  /* Check whether state needs reset or not */
+  if (resetStateFlag)
+  {
+    /* Clear the state buffer.  The size will be always 2 samples */
+    memset(S->state, 0, 2U * sizeof(q31_t));
+  }
+
+}
+
+
+/*-----------------------------------------------------------------------------
+History:
+
+Notes:
+Could use some work on the saturated add/subtract.
+
+-----------------------------------------------------------------------------*/
+void iir_pid_init_v2_q31( iir_pid_instance_v2_q31 *S, int32_t resetStateFlag)
+{
+  /* Run the below code for Cortex-M4 and Cortex-M3 */
+
+  /* Derived coefficient A0 */
+  S->A0 = __QADD(__QADD(S->KAp, S->KAi), S->KAd);
+
+  /* Derived coefficient A1 */
+  S->A1 = 0 - S->KAp - S->KAd - S->KAd; //<<1);
+
+  S->A2 = S->KAd;
+
+  /* Derived coefficient B0 */
+  S->B0 = __QADD(__QADD(S->KBp, S->KBi), S->KBd);
+
+  /* Derived coefficient B1 */
+  S->B1 = 0 - S->KBp - S->KBd - S->KBd; //<<1);
+
+  S->B2 = S->KBd;
+
+  /* Check whether state needs reset or not */
+  if (resetStateFlag)
+  {
+    /* Clear the state buffer.  The size will be always 2 samples */
+    memset(S->state, 0, 3U * sizeof(q31_t));
+  }
+
+  S->mask_count = 0;
+
+}
