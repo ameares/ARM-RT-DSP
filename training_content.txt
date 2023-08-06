@@ -1,5 +1,4 @@
 Training Context File
-6/20/2023
 
 /////////////////////////////////////
 
@@ -40,8 +39,10 @@ ARM-RT-DSP/
 
 Here is my status journal for the project:
 8/6 - Added PI/PID controllers to the library.
+7/1 - Fixed ADC test failures in Suite 3.  0 failures remain.
+7/1 - Github workflow for pdf documentation is broken / inefficient.
 6/30 - Updated gitignore to ignore gcov and compiled files.
-6/21 - Added capability to generate plot images with plot_csv.py.
+6/21 - Added capability to generate plot images.
 6/21 - Added Github workflow for generating pdf documentation.
 6/20 - Added Doxygen configuration file.
 6/19 - Fixed most test failures; four ADC-related tests in Suite 3 remain.

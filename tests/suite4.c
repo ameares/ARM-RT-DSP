@@ -9,7 +9,7 @@
 #define CSV_FILE_PATH "./tests_out/test_sequence_limit_i16.csv"
 
 void test_sequence_limit_i16(void) {
-    int16_t seq_len = TEST_SEQUENCE_LENGTH;
+    //int16_t seq_len = TEST_SEQUENCE_LENGTH;
 
     // Open the file for writing. This will overwrite the existing file if it exists.
     FILE *fp = fopen(CSV_FILE_PATH, "w");
