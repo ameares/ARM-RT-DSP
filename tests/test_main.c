@@ -50,6 +50,8 @@ void test_check_delta_f32();
 void test_sequence_limit_i16(void);
 
 void test_sequence_iir_pi_q15(void);
+void test_sequence_iir_pi_q31(void);
+
 
 // Test functions for each suite
 Test suite1_tests[] = {
@@ -107,6 +109,7 @@ Test suite4_tests[] = {
 
 Test suite5_tests[] = {
     {"test_sequence_iir_pi_q15", test_sequence_iir_pi_q15},
+    {"test_sequence_iir_pi_q31", test_sequence_iir_pi_q31},
 };
 
 // Suites
