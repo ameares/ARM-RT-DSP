@@ -23,6 +23,7 @@ ARM-RT-DSP/
         ./suite2.c
         ./suite3.c
         ./suite4.c
+        ./suite5.c
         ./test_main.c
     ./include/
         ./arm_rt_dsp.h
@@ -38,6 +39,7 @@ ARM-RT-DSP/
         ./doxygen.yml
 
 Here is my status journal for the project:
+8/14 - Added PI functional tests to suite5.
 8/6 - Added PI/PID controllers to the library.
 7/1 - Fixed ADC test failures in Suite 3.  0 failures remain.
 7/1 - Github workflow for pdf documentation is broken / inefficient.

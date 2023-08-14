@@ -28,6 +28,7 @@ Welcome to the ARM-RT-DSP repository! This repository contains the ARM Real-Time
 - Ramp functions.
 - Hysteresis functions.
 - Fast and simple pseudo-moving average filter.
+- PI and PID controllers.
 
 ## Installation
 

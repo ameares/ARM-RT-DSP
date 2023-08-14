@@ -6,7 +6,9 @@
 #include "arm_rt_dsp.h"
 
 #define TEST_SEQUENCE_LENGTH 100
-#define CSV_FILE_PATH "./tests_out/test_sequence_iir_pi_q15.csv"
+#define CSV_FILE_PATH_PI_Q15 "./tests_out/test_sequence_iir_pi_q15.csv"
+
+#define CSV_FILE_PATH_PI_Q31 "./tests_out/test_sequence_iir_pi_q31.csv"
 
 // First Order System struct definition
 typedef struct
@@ -49,7 +51,7 @@ void test_sequence_iir_pi_q15(void)
     iir_pi_init_q15(&mypi, 1);
 
     // Open the file for writing. This will overwrite the existing file if it exists.
-    FILE *fp = fopen(CSV_FILE_PATH, "w");
+    FILE *fp = fopen(CSV_FILE_PATH_PI_Q15, "w");
     if (!fp)
     {
         CU_FAIL("Could not open file for writing");
@@ -78,6 +80,74 @@ void test_sequence_iir_pi_q15(void)
     }
 
     // Close the file
+    if (fclose(fp) == EOF)
+    {
+        CU_FAIL("Failed to close the file");
+    }
+    else
+    {
+        CU_PASS("Test sequence written to file successfully");
+    }
+}
+
+
+// First Order System struct definition for q31_t
+typedef struct
+{
+    q31_t a; // system parameter a
+    q31_t b; // system parameter b
+    q31_t x; // system state/output
+} first_order_system_q31;
+
+// First Order System initialization function for q31_t
+void fos_init_q31(first_order_system_q31 *sys, q31_t a, q31_t b, q31_t initial_x)
+{
+    sys->a = a;
+    sys->b = b;
+    sys->x = initial_x;
+}
+
+// First Order System update function for q31_t
+q31_t fos_update_q31(first_order_system_q31 *sys, q31_t u)
+{
+    sys->x = mul_q31(sys->a, sys->x) - mul_q31(sys->b, u);
+    return sys->x;
+}
+
+void test_sequence_iir_pi_q31(void)
+{
+    iir_pi_instance_q31 mypi_q31;
+    q31_t ref = Q31(0.1);
+    q31_t error = 0;
+    q31_t u = 0;
+
+    // Initialize the first order system for q31_t
+    first_order_system_q31 fos_q31;
+    fos_init_q31(&fos_q31, Q31(-0.25), Q31(0.1), Q31(0.0));
+
+    // Initialize the filter for q31_t
+    mypi_q31.Kp = ACC32(1.5);
+    mypi_q31.Ki = ACC32(1.0);
+    iir_pi_init_q31(&mypi_q31, 1);
+
+    FILE *fp = fopen(CSV_FILE_PATH_PI_Q31, "w");
+    if (!fp)
+    {
+        CU_FAIL("Could not open file for writing");
+        return;
+    }
+    // Write the CSV header
+    fprintf(fp, "input_value,output_value\n");
+
+    // Generate TEST_SEQUENCE_LENGTH calls to the function for q31_t
+    for (int i = 0; i < TEST_SEQUENCE_LENGTH; i++)
+    {
+        error = fos_q31.x - ref;
+        u = iir_pi_q31(&mypi_q31, error);
+        fos_update_q31(&fos_q31, u);
+        fprintf(fp, "%d,%d\n", i, fos_q31.x);
+    }
+
     if (fclose(fp) == EOF)
     {
         CU_FAIL("Failed to close the file");
