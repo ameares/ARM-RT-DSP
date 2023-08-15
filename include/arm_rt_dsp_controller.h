@@ -170,13 +170,6 @@ static inline q31_t iir_pi_q31(iir_pi_instance_q31 *S, q31_t in)
     // The other algorithm uses __SSAT for 32 bit saturation
     out = ssat_i64(acc, 32);
 
-    // out is [-1.0, 1.0) here and in q31_t format.  In practice the effective integrator might be saturated below that value.
-    // Say we wanted a 16-bit signed integer output but we wanted the gains to be somewhat readable.
-    // To get 6000 from 0.170 with a Kp of 16.4u
-    // Say we shift 6000<<2 to make +/-24000, that makes the gain 66u
-    // Or instead we could shift the gains by how many?
-    // 1/16.4u is about 15 bits
-
     S->state[0] = in;
     S->state[1] = out;
     return out;
@@ -200,20 +193,13 @@ static inline q31_t iir_pid_q31(iir_pid_instance_q31 *S, q31_t in)
     int64_t acc_d;
     q31_t out;
 
-	// Could add some guard bits?
-	// 2 bits would throw away
 	// 17.15 * 1.31 => 18.46
 	/* acc = A0 * x[n]  */
     acc = (int64_t)S->A0 * (int64_t)in;
     acc += (int64_t)S->A1 * (int64_t)S->state[0];
-    //acc += (int64_t)S->A2 * (int64_t)S->state[1];
     acc_d = (int64_t)S->A0d * (int64_t)in;
     acc_d += (int64_t)S->A1d * (int64_t)S->state[0];
     acc_d += (int64_t)S->A2d * (int64_t)S->state[1];
-
-//	acc = (int64_t)S->A0 * (int64_t)in;
-//	acc += (int64_t)S->A1 * (int64_t)S->state[0];
-//	acc += (int64_t)S->A2 * (int64_t)S->state[1];
 
     acc += ((int64_t)S->state[2]) << 15;   // move the decimal from 1.31 to 1.46
 
@@ -222,31 +208,13 @@ static inline q31_t iir_pid_q31(iir_pid_instance_q31 *S, q31_t in)
     acc = acc >> 15;
     acc_d = acc_d >> 15;
 
-    //S->dstate[1] = S->dstate[0];
     S->dstate = ssat_i64(acc_d, 32);
-    //out_d = ssat_i64(acc_d, 32);
 
-    //S->fdstate[1] = S->fdstate[0];
     S->fdstate = (S->dstate >> 2) + S->fdstate - (S->fdstate >> 2);
     // The other algorithm uses __SSAT for 32 bit saturation
     out = ssat_i64(acc, 32);
     out += S->fdstate;
-//
-//	acc += ((int64_t)S->state[2]) << 15;   // move the decimal from 1.31 to 1.46
-//
-//	// acc is in 18.46 format
-//	// could add rounding here.
-//	acc = acc >> 15;
-//
-//	// The other algorithm uses __SSAT for 32 bit saturation
-//	out = ssat_i64(acc, 32);
 
-    // out is [-1.0, 1.0) here and in q31_t format.  In practice the effective integrator might be saturated below that value.
-    // Say we wanted a 16-bit signed integer output but we wanted the gains to be somewhat readable.
-    // To get 6000 from 0.170 with a Kp of 16.4u
-    // Say we shift 6000<<2 to make +/-24000, that makes the gain 66u
-    // Or instead we could shift the gains by how many?
-    // 1/16.4u is about 15 bits
     S->state[1] = S->state[0];
     S->state[0] = in;
     S->state[2] = out;
@@ -306,8 +274,6 @@ static inline q31_t iir_pi_v2_q31(iir_pi_instance_v2_q31 *S, q31_t in, int32_t b
     // set state[1] = out0?  Might work.
 
     if (!b_select) {
-        // Could add some guard bits?
-        // 2 bits would throw away
         // 17.15 * 1.31 => 18.46
         /* acc = A0 * x[n]  */
         acc = (int64_t)S->A0 * (int64_t)in;
@@ -325,13 +291,6 @@ static inline q31_t iir_pi_v2_q31(iir_pi_instance_v2_q31 *S, q31_t in, int32_t b
 
     // The other algorithm uses __SSAT for 32 bit saturation
     out = ssat_i64(acc, 32);
-
-    // out is [-1.0, 1.0) here and in q31_t format.  In practice the effective integrator might be saturated below that value.
-    // Say we wanted a 16-bit signed integer output but we wanted the gains to be somewhat readable.
-    // To get 6000 from 0.170 with a Kp of 16.4u
-    // Say we shift 6000<<2 to make +/-24000, that makes the gain 66u
-    // Or instead we could shift the gains by how many?
-    // 1/16.4u is about 15 bits
 
     S->state[0] = in;
     S->state[1] = out;
@@ -413,8 +372,6 @@ static inline q31_t iir_pid_v2_q31(iir_pid_instance_v2_q31 *S, q31_t in, int32_t
         out = S->state[2];
     } else {
         if (!b_select) {
-            // Could add some guard bits?
-            // 2 bits would throw away
             // 17.15 * 1.31 => 18.46
             /* acc = A0 * x[n]  */
             acc = (int64_t)S->A0 * (int64_t)in;
@@ -437,11 +394,6 @@ static inline q31_t iir_pid_v2_q31(iir_pid_instance_v2_q31 *S, q31_t in, int32_t
     }
 
     // out is [-1.0, 1.0) here and in q31_t format.  In practice the effective integrator might be saturated below that value.
-    // Say we wanted a 16-bit signed integer output but we wanted the gains to be somewhat readable.
-    // To get 6000 from 0.170 with a Kp of 16.4u
-    // Say we shift 6000<<2 to make +/-24000, that makes the gain 66u
-    // Or instead we could shift the gains by how many?
-    // 1/16.4u is about 15 bits
     S->state[1] = S->state[0];
     S->state[0] = in;
     S->state[2] = out;
