@@ -59,4 +59,4 @@ For any questions, feedback, or suggestions regarding the ARM-RT-DSP library, pl
 Andrew Meares
 Email: mearesinfo@gmail.com
 
-We appreciate your interest in the ARM-RT-DSP project!
+I appreciate your interest in the ARM-RT-DSP project!
