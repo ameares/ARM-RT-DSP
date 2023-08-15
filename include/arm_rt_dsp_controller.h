@@ -402,5 +402,4 @@ static inline q31_t iir_pid_v2_q31(iir_pid_instance_v2_q31 *S, q31_t in, int32_t
 
 
 
-
 #endif /* ARM_RT_DSP_CONTROLLER_ */
