@@ -34,6 +34,7 @@ tests/test_main.c
 training_content.txt
 
 Status Journal:
+8/14 - Improved plot_csv.py script.
 8/14 - Separated arm_rt_dsp.h into multiple files.
 8/14 - Added PI functional tests to suite5.
 8/6 - Added PI/PID controllers to the library.
