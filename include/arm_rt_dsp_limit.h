@@ -19,7 +19,7 @@
  * allow limiting on only one side of the range or both sides.
  * 
  * \image html test_sequence_limit_i16.png "Sequential calls to limit_i16(val, llim, ulim)"
- * \image latex test_sequence_limit_i16.png "Sequential calls to limit_i16(val, llim, ulim)" width=5cm
+ * \image latex test_sequence_limit_i16.png "Sequential calls to limit_i16(val, llim, ulim)" width=10cm
  * 
  * @{
 */

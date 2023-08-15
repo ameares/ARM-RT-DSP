@@ -43,11 +43,11 @@ void test_sequence_iir_pi_q15(void)
 
     // Initialize the first order system
     first_order_system_q15 fos;
-    fos_init_q15(&fos, Q15(-0.25), Q15(0.1), Q15(0.0));
+    fos_init_q15(&fos, Q15(0.125), Q15(0.75), Q15(-0.01));
 
     // Initialize the filter
-    mypi.Kp = ACC16(1.5);
-    mypi.Ki = ACC16(1.0);
+    mypi.Kp = ACC16(0.25);
+    mypi.Ki = ACC16(0.1);
     iir_pi_init_q15(&mypi, 1);
 
     // Open the file for writing. This will overwrite the existing file if it exists.
@@ -58,7 +58,7 @@ void test_sequence_iir_pi_q15(void)
         return;
     }
     // Write the CSV header
-    fprintf(fp, "Input Value, Output Value\n");
+    fprintf(fp, "Sample, Target, Output Value\n");
 
     // Generate TEST_SEQUENCE_LENGTH calls to the function
     for (int i = 0; i < TEST_SEQUENCE_LENGTH; i++)
@@ -76,7 +76,7 @@ void test_sequence_iir_pi_q15(void)
         fos_update_q15(&fos, u);
 
         // Write the input and output values to the CSV file
-        fprintf(fp, "%d,%d\n", i, fos.x);
+        fprintf(fp, "%d,%d,%d\n", i, ref, fos.x);
     }
 
     // Close the file
@@ -123,11 +123,11 @@ void test_sequence_iir_pi_q31(void)
 
     // Initialize the first order system for q31_t
     first_order_system_q31 fos_q31;
-    fos_init_q31(&fos_q31, Q31(-0.25), Q31(0.1), Q31(0.0));
+    fos_init_q31(&fos_q31, Q31(0.125), Q31(0.75), Q31(-0.01));
 
     // Initialize the filter for q31_t
-    mypi_q31.Kp = ACC32(1.5);
-    mypi_q31.Ki = ACC32(1.0);
+    mypi_q31.Kp = ACC32(0.25);
+    mypi_q31.Ki = ACC32(0.1);
     iir_pi_init_q31(&mypi_q31, 1);
 
     FILE *fp = fopen(CSV_FILE_PATH_PI_Q31, "w");
@@ -137,7 +137,7 @@ void test_sequence_iir_pi_q31(void)
         return;
     }
     // Write the CSV header
-    fprintf(fp, "Input Value, Output Value\n");
+    fprintf(fp, "Sample, Target, Output Value\n");
 
     // Generate TEST_SEQUENCE_LENGTH calls to the function for q31_t
     for (int i = 0; i < TEST_SEQUENCE_LENGTH; i++)
@@ -145,7 +145,7 @@ void test_sequence_iir_pi_q31(void)
         error = fos_q31.x - ref;
         u = iir_pi_q31(&mypi_q31, error);
         fos_update_q31(&fos_q31, u);
-        fprintf(fp, "%d,%d\n", i, fos_q31.x);
+        fprintf(fp, "%d,%d,%d\n", i, ref, fos_q31.x);
     }
 
     if (fclose(fp) == EOF)

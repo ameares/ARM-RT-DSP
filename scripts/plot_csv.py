@@ -47,7 +47,7 @@ def plot_data(df, output_file):
     # Add labels and title
     ax.set_xlabel(x_col)
     ax.set_ylabel('')
-    ax.set_title('Plot of CSV data')
+    ax.set_title('')
 
     # Add a legend
     ax.legend()

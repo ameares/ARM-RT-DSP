@@ -12,6 +12,19 @@
 #include "arm_rt_dsp_core.h"
 
 
+/**
+ * \defgroup pid_group PI and PID Controllers
+ * 
+ * 
+ * \image html test_sequence_iir_pi_q15.png "Simulated 1st Order Response to iir_pi_q15(...)"
+ * \image latex test_sequence_iir_pi_q15.png "Simulated 1st Order Response to iir_pi_q15(...)" width=10cm
+ * 
+ * \image html test_sequence_iir_pi_q31.png "Simulated 1st Order Response to iir_pi_q31(...)"
+ * \image latex test_sequence_iir_pi_q31.png "Simulated 1st Order Response to iir_pi_q31(...)" width=10cm
+ * @{
+*/
+
+
 // PID Functions
 
 #define PI_Q15_STATE_BUFFER_SIZE 2
@@ -19,14 +32,16 @@
 /**
  * \brief Instance structure for the iir PI controller that uses a q15_t data type.
  *
+ * To initialize, set the gains Kp and Ki.  The derived gains are calculated as
+ * A0 = Kp + Ki and A1 = -Kp and the state buffer is cleared in the init function.
  */
 typedef struct
 {
-  acc16_t A0;           /**< The derived gain, A0 = Kp + Ki. */
-  acc16_t A1;           /**< The derived gain, A0 = -Kp. */
-  q15_t state[PI_Q15_STATE_BUFFER_SIZE];       /**< The state array of length 2. */
-  acc16_t Kp;           /**< The proportional gain. */
-  acc16_t Ki;           /**< The integral gain. */
+  acc16_t A0;           
+  acc16_t A1;           
+  q15_t state[PI_Q15_STATE_BUFFER_SIZE];
+  acc16_t Kp;
+  acc16_t Ki;
 } iir_pi_instance_q15;
 
 
@@ -83,14 +98,16 @@ static inline q15_t iir_pi_q15(iir_pi_instance_q15 * S, q15_t in) {
 /**
  * \brief Instance structure for the iir PI controller that uses a q31_t data type.
  *
+ * To initialize, set the gains Kp and Ki.  The derived gains are calculated as
+ * A0 = Kp + Ki and A1 = -Kp and the state buffer is cleared in the init function.
  */
 typedef struct
 {
-  acc32_t Kp;            /**< The proportional gain. */
-  acc32_t Ki;            /**< The integral gain. */
-  acc32_t A0;            /**< The derived gain, A0 = Kp + Ki + Kd . */
-  acc32_t A1;            /**< The derived gain, A1 = -Kp - 2Kd. */
-  q31_t state[PI_Q31_STATE_BUFFER_SIZE];        /**< The state array of length 3. */
+  acc32_t Kp;            
+  acc32_t Ki;            
+  acc32_t A0;            
+  acc32_t A1;            
+  q31_t state[PI_Q31_STATE_BUFFER_SIZE];
 } iir_pi_instance_q31;
 
 
@@ -111,16 +128,16 @@ void iir_pi_init_q31( iir_pi_instance_q31 *S, int32_t resetStateFlag);
  */
 typedef struct
 {
-  acc32_t Kp;            /**< The proportional gain. */
-  acc32_t Ki;            /**< The integral gain. */
+  acc32_t Kp;            // The proportional gain.
+  acc32_t Ki;            // The integral gain.
   acc32_t Kd;
-  acc32_t A0;            /**< The derived gain, A0 = Kp + Ki + Kd . */
-  acc32_t A1;            /**< The derived gain, A1 = -Kp - 2Kd. */
+  acc32_t A0;            // The derived gain, A0 = Kp + Ki + Kd .
+  acc32_t A1;            // The derived gain, A1 = -Kp - 2Kd.
   //acc32_t A2;
   acc32_t A0d;
   acc32_t A1d;
   acc32_t A2d;
-  q31_t state[PID_Q31_STATE_BUFFER_SIZE];        /**< The state array of length 3. */
+  q31_t state[PID_Q31_STATE_BUFFER_SIZE];        // The state array of length 3.
 
   q31_t dstate;
   q31_t fdstate;
@@ -225,20 +242,22 @@ static inline q31_t iir_pid_q31(iir_pid_instance_q31 *S, q31_t in)
 /**
  * \brief Instance structure for the iir PI controller that uses a q31_t data type.
  *
+ * To initialize, set the gains Kp, Ki, and Kd.  The derived gains are calculated as
+ * A0 = Kp + Ki + Kd and A1 = -Kp - 2Kd and the state buffer is cleared in the init function.
  */
 typedef struct
 {
-    acc32_t KAp;            /**< The proportional gain. */
-    acc32_t KAi;            /**< The integral gain. */
-    acc32_t A0;            /**< The derived gain, A0 = Kp + Ki + Kd . */
-    acc32_t A1;            /**< The derived gain, A1 = -Kp - 2Kd. */
+    acc32_t KAp;            // The proportional gain.
+    acc32_t KAi;            // The integral gain.
+    acc32_t A0;            // The derived gain, A0 = Kp + Ki + Kd .
+    acc32_t A1;            // The derived gain, A1 = -Kp - 2Kd.
 
-    acc32_t B0;            /**< The derived gain for the alternative control input. */
-    acc32_t B1;            /**< The derived gain for the alternative control input. */
-    acc32_t KBp;           /**< The proportional gain for the alternative control input. */
-    acc32_t KBi;           /**< The integral gain for the alternative control input. */
+    acc32_t B0;            // The derived gain for the alternative control input.
+    acc32_t B1;            // The derived gain for the alternative control input.
+    acc32_t KBp;           // The proportional gain for the alternative control input.
+    acc32_t KBi;           // The integral gain for the alternative control input.
 
-    q31_t state[2];        /**< The state array of length 3. */
+    q31_t state[2];        // The state array of length 3.
 } iir_pi_instance_v2_q31;
 
 
@@ -304,22 +323,22 @@ static inline q31_t iir_pi_v2_q31(iir_pi_instance_v2_q31 *S, q31_t in, int32_t b
  */
 typedef struct
 {
-    acc32_t KAp;            /**< The proportional gain. */
-    acc32_t KAi;            /**< The integral gain. */
+    acc32_t KAp;            // The proportional gain.
+    acc32_t KAi;            // The integral gain.
     acc32_t KAd;
-    acc32_t A0;            /**< The derived gain, A0 = Kp + Ki + Kd . */
-    acc32_t A1;            /**< The derived gain, A1 = -Kp - 2Kd. */
+    acc32_t A0;            // The derived gain, A0 = Kp + Ki + Kd .
+    acc32_t A1;            // The derived gain, A1 = -Kp - 2Kd.
     acc32_t A2;
 
-    acc32_t B0;            /**< The derived gain for the alternative control input. */
-    acc32_t B1;            /**< The derived gain for the alternative control input. */
+    acc32_t B0;            // The derived gain for the alternative control input.
+    acc32_t B1;            // The derived gain for the alternative control input.
     acc32_t B2;
 
-    acc32_t KBp;           /**< The proportional gain for the alternative control input. */
-    acc32_t KBi;           /**< The integral gain for the alternative control input. */
+    acc32_t KBp;           // The proportional gain for the alternative control input.
+    acc32_t KBi;           // The integral gain for the alternative control input.
     acc32_t KBd;
 
-    q31_t state[3];        /**< The state array of length 3. */
+    q31_t state[3];        // The state array of length 3.
 
     int32_t mask_count;
 } iir_pid_instance_v2_q31;
