@@ -20,8 +20,12 @@ def verbose_print(*aargs, **kwargs):
 verbose_print('Input file: {}'.format(args.input_file))
 verbose_print('Output file: {}'.format(args.output_file))
 
-# Load the CSV file into a pandas DataFrame
+# Load the CSV file into a pandas DataFrame, using the first row as column names
 df = pd.read_csv(args.input_file)
+
+# Get the column names
+x_col = df.columns[0]
+y_cols = df.columns[1:]
 
 # Set seaborn style
 sns.set(style='whitegrid')
@@ -29,16 +33,17 @@ sns.set(style='whitegrid')
 # Create a new figure and axis
 fig, ax = plt.subplots()
 
-# Plot the data
-sns.lineplot(data=df, x='input_value', y='output_value', ax=ax)
+# Plot each y-axis series on the same plot, using the column names as the labels
+for y_col in y_cols:
+    sns.lineplot(data=df, x=x_col, y=y_col, ax=ax, label=y_col)
 
 # Add labels and title
-ax.set_xlabel('Input value')
-ax.set_ylabel('Output value')
-ax.set_title('Input vs Output values')
+ax.set_xlabel(x_col)
+ax.set_ylabel('Value')
+ax.set_title('Plot of CSV data')
 
 # Add a legend
-# ax.legend()
+ax.legend()
 
 # Save the figure to the output file
 plt.savefig(args.output_file)
