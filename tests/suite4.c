@@ -18,7 +18,7 @@ void test_sequence_limit_i16(void) {
         return;
     }
     // Write the CSV header
-    fprintf(fp, "input_value,output_value\n");
+    fprintf(fp, "Input Value, Output Value\n");
 
     // Generate TEST_SEQUENCE_LENGTH calls to limit_i16
     for (int i = 0; i < TEST_SEQUENCE_LENGTH; i++) {

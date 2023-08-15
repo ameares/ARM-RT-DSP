@@ -58,7 +58,7 @@ void test_sequence_iir_pi_q15(void)
         return;
     }
     // Write the CSV header
-    fprintf(fp, "input_value,output_value\n");
+    fprintf(fp, "Input Value, Output Value\n");
 
     // Generate TEST_SEQUENCE_LENGTH calls to the function
     for (int i = 0; i < TEST_SEQUENCE_LENGTH; i++)
@@ -137,7 +137,7 @@ void test_sequence_iir_pi_q31(void)
         return;
     }
     // Write the CSV header
-    fprintf(fp, "input_value,output_value\n");
+    fprintf(fp, "Input Value, Output Value\n");
 
     // Generate TEST_SEQUENCE_LENGTH calls to the function for q31_t
     for (int i = 0; i < TEST_SEQUENCE_LENGTH; i++)
