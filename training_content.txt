@@ -1,7 +1,3 @@
-Training Context File
-
-/////////////////////////////////////
-
 I want to work on my Github project today.  This is an 
 embedded C project that uses CUnit for unit testing.  The 
 project consists of ARM DSP library that I am adding unit
