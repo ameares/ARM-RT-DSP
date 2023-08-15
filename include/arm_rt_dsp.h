@@ -1,6 +1,6 @@
 /**
  * \file arm_rt_dsp.h
- * \brief This file contains the definitions of the ARM DSP types and functions.
+ * \brief The main header file for the ARM RT DSP library.
  * 
 */
 
@@ -29,21 +29,5 @@
 
 // Misc functions, convert, sample, and threshold.
 #include "arm_rt_dsp_misc.h"
-
-#if (0)
-static inline int16_t __SSAT(int16_t value, uint16_t sat) {
-    int16_t max = (1 << (sat - 1)) - 1;
-    int16_t min = -max - 1;
-
-    if (value > max) {
-        return max;
-    } else if (value < min) {
-        return min;
-    } else {
-        return value;
-    }
-}
-#endif
-
 
 #endif

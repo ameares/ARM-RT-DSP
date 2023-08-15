@@ -11,6 +11,23 @@
 #include <string.h>
 #include "arm_rt_dsp_core.h"
 
+
+#if (0)
+static inline int16_t __SSAT(int16_t value, uint16_t sat) {
+    int16_t max = (1 << (sat - 1)) - 1;
+    int16_t min = -max - 1;
+
+    if (value > max) {
+        return max;
+    } else if (value < min) {
+        return min;
+    } else {
+        return value;
+    }
+}
+#endif
+
+
 /**
  * \brief Converts an unsigned ADC raw value to a Q15 format with offset and scale applied.
  *
