@@ -4,39 +4,36 @@ project consists of ARM DSP library that I am adding unit
 tests to and publishing to GitHub.  I would like to make 
 improvements as I go along.  Pick a task to work on today.
 
-Here are the directories and files in the ARM-DT-DSP repository:
-ARM-RT-DSP/
-    ./README.md
-    ./LICENSE.txt
-    ./Makefile
-    ./Doxyfile
-    ./training_content.txt
-    ./.gitignore
-    ./docs/
-        ./arm_rt_dsp_guide.pdf
-    ./tests/
-        ./suite1.c
-        ./suite2.c
-        ./suite3.c
-        ./suite4.c
-        ./suite5.c
-        ./test_main.c
-    ./include/
-        ./arm_rt_dsp.h
-        ./arm_rt_dsp_core.h
-        ./arm_rt_dsp_filter.h
-        ./common.h
-    ./scripts/
-        ./plot_csv.py
-        ./requirements.txt
-    ./src/
-        ./arm_rt_dsp.c
-        ./common.c
-    ./.github/workflows
-        ./c-cpp.yml
-        ./doxygen.yml
+ARM-DT-DSP Repository Files:
+.github/workflows/c-cpp.yml
+.github/workflows/doxygen.yml
+.gitignore
+Doxyfile
+LICENSE.txt
+Makefile
+README.md
+docs/arm_rt_dsp_guide.pdf
+include/arm_rt_dsp.h
+include/arm_rt_dsp_controller.h
+include/arm_rt_dsp_core.h
+include/arm_rt_dsp_filter.h
+include/arm_rt_dsp_limit.h
+include/arm_rt_dsp_misc.h
+include/arm_rt_dsp_ramp.h
+include/common.h
+scripts/plot_csv.py
+scripts/requirements.txt
+src/arm_rt_dsp.c
+suite5.c
+tests/suite1.c
+tests/suite2.c
+tests/suite3.c
+tests/suite4.c
+tests/suite5.c
+tests/test_main.c
+training_content.txt
 
-Here is my status journal for the project:
+Status Journal:
 8/14 - Separated arm_rt_dsp.h into multiple files.
 8/14 - Added PI functional tests to suite5.
 8/6 - Added PI/PID controllers to the library.
@@ -69,7 +66,7 @@ Here is my status journal for the project:
 5/16 - Added arm_rt_dsp.h and common.h to the project.
 5/15 - Created ARM-RT-DSP project in VS Code and added CUnit tests.
 
-Here is a list of tasks that need completing.
+List of Tasks:
 1. Add CUnit tests for functions that are not covered.
 2. Investigate failed CUnit tests.
 3. Investigate running unit tests on ARM dev boards.
